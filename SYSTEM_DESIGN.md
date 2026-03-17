@@ -342,3 +342,28 @@ A clean repository ensures:
 This is not hygiene for aesthetics.
 
 It is a requirement for deterministic system behavior.
+
+## Founder-Level Enforcement Model
+
+The founder defines the allowed structure of the organization.
+
+All roles must conform to founder-level templates and constraints.
+
+### Enforcement Rules
+
+- ROLE_META.yaml must contain all required keys
+- ROLE_META.yaml values must not contain numbers where prohibited
+- every role must include all required files
+- no role may define its own structure outside templates
+
+### System Behavior
+
+- invalid roles are rejected at validation
+- templates define structure, not the model
+- the model supplies values, not structure
+
+This establishes a compiler-like system.
+
+Inputs are proposed values.
+
+Outputs are validated organizational artifacts.

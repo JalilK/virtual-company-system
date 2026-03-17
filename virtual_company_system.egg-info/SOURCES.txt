@@ -2,6 +2,7 @@ README.md
 pyproject.toml
 tests/test_file_structure.py
 tests/test_hierarchy.py
+tests/test_repo_hygiene.py
 tests/test_role_meta_schema.py
 tests/test_templates.py
 vc/__init__.py
