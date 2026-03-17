@@ -1,1 +1,0 @@
-No merge without passing validation and tests.

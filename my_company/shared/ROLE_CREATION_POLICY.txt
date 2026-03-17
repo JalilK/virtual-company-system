@@ -1,1 +1,0 @@
-All roles must be created from templates and pass validation before write.

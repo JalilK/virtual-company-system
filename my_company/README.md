@@ -1,1 +1,0 @@
-Virtual Company System project
