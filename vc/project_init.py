@@ -3,10 +3,11 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 from vc.templates import (
     context_template,
     directives_template,
-    founder_expansion_confirmation_template,
     founder_init_prompt_template,
     init_config_template,
     role_creation_template,
@@ -128,8 +129,6 @@ def _role_payload(role: dict[str, Any], company_root: Path) -> dict[str, Any]:
     role_id = role["role_id"]
     role_path = _role_dir(company_root, role_group, role_family, role_id)
     managed_role = role.get("managed_role")
-    reports_to = role.get("reports_to")
-    is_anchor = bool(role["is_ic_anchor"])
     payload = {
         "role_id": role_id,
         "role_name": role["role_name"],
@@ -137,10 +136,10 @@ def _role_payload(role: dict[str, Any], company_root: Path) -> dict[str, Any]:
         "role_family": role_family,
         "role_type": role["role_type"],
         "role_level": role["role_level"],
-        "reports_to": reports_to,
+        "reports_to": role.get("reports_to"),
         "managed_role": managed_role,
         "manages": role.get("manages", []),
-        "is_ic_anchor": is_anchor,
+        "is_ic_anchor": str(bool(role["is_ic_anchor"])) .lower(),
         "ic_anchor_role_id": role["ic_anchor_role_id"],
         "company_role_path": str(role_path.relative_to(company_root)).replace('\\', '/'),
         "mission": role.get("mission", "Define the mission of this role."),
@@ -160,37 +159,23 @@ def _role_payload(role: dict[str, Any], company_root: Path) -> dict[str, Any]:
         "inputs": "Mission, strategy, role directives, and upstream requests.",
         "outputs": "Structured decisions, plans, and artifacts owned by this role.",
         "key_collaborators": "Founder, peer roles, and direct reports as applicable.",
-        "success_metrics": "Role outputs are timely, structured, aligned, and useful.",
-        "failure_modes": "Authority drift, unstructured outputs, missing escalations, and unclear scope boundaries.",
-        "escalation_path": f"Escalate to {reports_to or 'none'} when work exceeds defined authority.",
+        "success_metrics": "Outputs are correct, timely, and aligned with strategy.",
+        "failure_modes": "Scope drift, broken escalations, weak decisions, or missing outputs.",
+        "escalation_path": role.get("reports_to") or "founder",
     }
-    payload["reports_to_text"] = "null" if reports_to is None else reports_to
-    payload["managed_role_text"] = "null" if managed_role is None else managed_role
-    payload["manages_text"] = role.get("manages", [])
-    payload["is_ic_anchor_text"] = "true" if is_anchor else "false"
+    payload["managed_role"] = managed_role if managed_role is not None else "null"
+    payload["reports_to"] = payload["reports_to"] if payload["reports_to"] is not None else "null"
+    payload["manages"] = payload["manages"] if payload["manages"] else []
     return payload
 
 
 def create_role_files(company_root: Path, role: dict[str, Any], founder: bool = False) -> None:
     payload = _role_payload(role, company_root)
-    role_dir = _role_dir(company_root, payload["role_group"], payload["role_family"], payload["role_id"])
+    role_dir = _role_dir(company_root, role["role_group"], role.get("role_family"), role["role_id"])
     ensure_dir(role_dir)
 
-    meta = role_meta_template().format(
-        role_id=payload["role_id"],
-        role_name=payload["role_name"],
-        role_group=payload["role_group"],
-        role_family=payload["role_family"],
-        role_type=payload["role_type"],
-        role_level=payload["role_level"],
-        reports_to=payload["reports_to_text"],
-        managed_role=payload["managed_role_text"],
-        manages=payload["manages_text"],
-        is_ic_anchor=payload["is_ic_anchor_text"],
-        ic_anchor_role_id=payload["ic_anchor_role_id"],
-        company_role_path=payload["company_role_path"],
-    )
-    write_text(role_dir / "ROLE_META.yaml", meta)
+    meta_content = role_meta_template().format(**payload)
+    write_text(role_dir / "ROLE_META.yaml", meta_content)
     write_text(role_dir / "CONTEXT.txt", context_template().format(**payload))
     write_text(role_dir / "DIRECTIVES.txt", directives_template().format(**payload))
     write_text(role_dir / "ROLE_SPEC.txt", role_spec_template().format(**payload))
@@ -200,8 +185,12 @@ def create_role_files(company_root: Path, role: dict[str, Any], founder: bool = 
         write_text(role_dir / "FOUNDER_INIT_PROMPT.txt", founder_init_prompt_template())
 
 
-def _write_root_files(company_root: Path) -> None:
-    for subpath in [
+def init_company(base_dir: Path, company_name: str) -> Path:
+    company_root = base_dir / company_name
+    ensure_dir(company_root)
+
+    for sub in [
+        "roles/founder",
         "roles/c_suite",
         "roles/workers",
         "shared",
@@ -211,57 +200,9 @@ def _write_root_files(company_root: Path) -> None:
         "inputs",
         "outputs",
     ]:
-        ensure_dir(company_root / subpath)
+        ensure_dir(company_root / sub)
 
-    shared_value_keys = {
-        "role_group": ["founder", "c_suite", "workers"],
-        "role_type": ["founder", "executive", "manager", "individual_contributor"],
-        "role_level": ["founder", "c_suite", "vp", "director", "manager", "principal", "staff", "senior", "mid", "junior"],
-        "status": ["active", "inactive"],
-    }
-    dump_yaml(company_root / "shared" / "VALUE_KEYS.yaml", shared_value_keys)
-    write_text(company_root / "shared" / "COMPANY_MISSION.txt", "Define the company mission here.")
-    write_text(company_root / "shared" / "COMPANY_STRATEGY.txt", "Define the company strategy here.")
-    write_text(company_root / "shared" / "OUTPUT_RULES.txt", "All outputs must be structured, deterministic, and reviewable.")
-    write_text(company_root / "shared" / "ROLE_CREATION_POLICY.txt", "All roles must be created from templates and pass validation before write.")
-    write_text(company_root / "shared" / "MERGE_POLICY.txt", "No merge without passing validation and tests.")
-
-    dump_yaml(company_root / "org" / "org_chart.yaml", {"root": "founder"})
-    dump_yaml(company_root / "org" / "role_index.yaml", {"roles": []})
-    dump_yaml(company_root / "org" / "responsibility_map.yaml", {"notes": "Fill responsibility map as the organization evolves."})
-    dump_yaml(company_root / "org" / "capability_gaps.yaml", {"notes": "Fill capability gaps as the organization evolves."})
-
-    write_text(company_root / "templates" / "role" / "ROLE_META.yaml.template", role_meta_template())
-    write_text(company_root / "templates" / "role" / "CONTEXT.txt.template", context_template())
-    write_text(company_root / "templates" / "role" / "DIRECTIVES.txt.template", directives_template())
-    write_text(company_root / "templates" / "role" / "ROLE_SPEC.txt.template", role_spec_template())
-    write_text(company_root / "templates" / "company" / "INIT_CONFIG.yaml.template", init_config_template())
-    write_text(company_root / "inputs" / "FOUNDER_EXPANSION_CONFIRMATION.yaml", founder_expansion_confirmation_template())
-
-
-def refresh_org_files(company_root: Path) -> None:
-    role_ids: list[str] = []
-    chart: dict[str, list[str]] = {}
-    for meta_path in (company_root / "roles").glob("**/ROLE_META.yaml"):
-        import yaml
-        data = yaml.safe_load(meta_path.read_text(encoding="utf-8"))
-        role_id = data["role_id"]
-        role_ids.append(role_id)
-        reports_to = data.get("reports_to")
-        if reports_to:
-            chart.setdefault(reports_to, []).append(role_id)
-    role_ids.sort()
-    for key in chart:
-        chart[key] = sorted(chart[key])
-    dump_yaml(company_root / "org" / "role_index.yaml", {"roles": role_ids})
-    dump_yaml(company_root / "org" / "org_chart.yaml", {"root": "founder", "reports": chart})
-
-
-def init_company(base_dir: Path, company_name: str) -> Path:
-    company_root = base_dir / company_name
-    ensure_dir(company_root)
-    write_text(company_root / "README.md", f"# {company_name}\n")
-    _write_root_files(company_root)
+    write_text(company_root / "README.md", "Virtual Company System project")
 
     founder_role = {
         "role_id": "founder",
@@ -284,5 +225,28 @@ def init_company(base_dir: Path, company_name: str) -> Path:
     for role in DEFAULT_C_SUITE:
         create_role_files(company_root, role)
 
-    refresh_org_files(company_root)
+    shared_value_keys = {
+        "role_group": ["founder", "c_suite", "workers"],
+        "role_type": ["founder", "executive", "manager", "individual_contributor"],
+        "role_level": ["founder", "c_suite", "vp", "director", "manager", "principal", "staff", "senior", "mid", "junior"],
+        "status": ["active", "inactive"],
+    }
+    dump_yaml(company_root / "shared" / "VALUE_KEYS.yaml", shared_value_keys)
+    write_text(company_root / "shared" / "COMPANY_MISSION.txt", "Define the company mission here.")
+    write_text(company_root / "shared" / "COMPANY_STRATEGY.txt", "Define the company strategy here.")
+    write_text(company_root / "shared" / "OUTPUT_RULES.txt", "All outputs must be structured, deterministic, and reviewable.")
+    write_text(company_root / "shared" / "ROLE_CREATION_POLICY.txt", "All roles must be created from templates and pass validation before write.")
+    write_text(company_root / "shared" / "MERGE_POLICY.txt", "No merge without passing validation and tests.")
+
+    dump_yaml(company_root / "org" / "org_chart.yaml", {"root": "founder"})
+    dump_yaml(company_root / "org" / "role_index.yaml", {"roles": ["founder"] + [r["role_id"] for r in DEFAULT_C_SUITE]})
+    dump_yaml(company_root / "org" / "responsibility_map.yaml", {"notes": "Fill responsibility map as the organization evolves."})
+    dump_yaml(company_root / "org" / "capability_gaps.yaml", {"notes": "Fill capability gaps as the organization evolves."})
+
+    write_text(company_root / "templates" / "role" / "ROLE_META.yaml.template", role_meta_template())
+    write_text(company_root / "templates" / "role" / "CONTEXT.txt.template", context_template())
+    write_text(company_root / "templates" / "role" / "DIRECTIVES.txt.template", directives_template())
+    write_text(company_root / "templates" / "role" / "ROLE_SPEC.txt.template", role_spec_template())
+    write_text(company_root / "templates" / "company" / "INIT_CONFIG.yaml.template", init_config_template())
+
     return company_root

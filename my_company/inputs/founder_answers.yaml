@@ -1,8 +1,0 @@
-company_name: my_company
-company_mission: Build a deterministic virtual company system.
-company_strategy: Start with constrained leadership and expand only through validated roles.
-required_functions:
-  - engineering
-  - product
-  - marketing
-confirmed_by_founder: true

@@ -3,8 +3,8 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "c-suite-gpt"
-version = "1.1.0"
+name = "virtual-company-system"
+version = "1.0.0"
 description = "Schema-enforced virtual company operating system"
 readme = "README.md"
 requires-python = ">=3.11"
