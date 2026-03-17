@@ -1,39 +1,56 @@
-from pathlib import Path
+from pathlib import PurePosixPath
+import subprocess
 
-FORBIDDEN_PATTERNS = [
+
+FORBIDDEN_PARTS = {
     ".venv",
     "__pycache__",
     ".pytest_cache",
-]
+}
 
-FORBIDDEN_EXTENSIONS = [
+FORBIDDEN_EXTENSIONS = {
     ".pyc",
     ".pyo",
     ".pyd",
-]
+}
 
 
-def test_no_forbidden_directories_present():
-    for path in Path(".").rglob("*"):
-        if any(part in FORBIDDEN_PATTERNS for part in path.parts):
-            assert False, f"Forbidden directory committed: {path}"
+def tracked_files() -> list[str]:
+    result = subprocess.run(
+        ["git", "ls-files"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
 
 
-def test_no_compiled_python_files_present():
-    for path in Path(".").rglob("*"):
+def test_no_forbidden_directories_tracked():
+    for file_path in tracked_files():
+        path = PurePosixPath(file_path)
+        if any(part in FORBIDDEN_PARTS for part in path.parts):
+            raise AssertionError(f"Forbidden tracked path found: {file_path}")
+
+
+def test_no_compiled_python_files_tracked():
+    for file_path in tracked_files():
+        path = PurePosixPath(file_path)
         if path.suffix in FORBIDDEN_EXTENSIONS:
-            assert False, f"Compiled file committed: {path}"
+            raise AssertionError(f"Compiled Python artifact tracked: {file_path}")
 
 
-def test_gitignore_enforces_rules():
-    content = Path(".gitignore").read_text()
+def test_gitignore_contains_repo_hygiene_entries():
+    gitignore = Path(".gitignore").read_text()
 
     required_entries = [
         ".venv/",
         "__pycache__/",
         "*.pyc",
+        "*.pyo",
+        "*.pyd",
         ".pytest_cache/",
+        ".DS_Store",
     ]
 
     for entry in required_entries:
-        assert entry in content, f"Missing gitignore rule: {entry}"
+        assert entry in gitignore, f"Missing .gitignore entry: {entry}"
