@@ -297,3 +297,48 @@ If a change weakens the system, it is not accepted.
 If a change strengthens the system, it compounds.
 
 This is how the system scales.
+
+## Repository Hygiene Enforcement
+
+The repository must never contain local execution artifacts.
+
+This includes:
+
+- virtual environments
+- compiled Python files
+- cache directories
+- runtime-generated company state
+
+These are not optional guidelines.
+
+They are enforced constraints.
+
+### Why this matters
+
+Local artifacts introduce nondeterminism into the system.
+
+They create:
+
+- noisy diffs
+- inconsistent environments
+- broken CI assumptions
+- ambiguity for LLM-driven workflows
+
+A clean repository ensures:
+
+- reproducible installs
+- deterministic execution paths
+- clean diffs for review and automation
+- reliable CI validation
+
+### Enforcement Rules
+
+- `.venv` must never be committed
+- `__pycache__` must never be committed
+- compiled Python files must never be committed
+- `.gitignore` must explicitly block these artifacts
+- tests must fail if these artifacts exist in the repo
+
+This is not hygiene for aesthetics.
+
+It is a requirement for deterministic system behavior.

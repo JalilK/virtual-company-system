@@ -1,4 +1,16 @@
+# Python environments
+.venv/
 
-# generated companies
+# Python cache artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# OS
+.DS_Store
+
+# Generated company state (never commit runtime state)
 my_company/
 *_company/
