@@ -28,10 +28,7 @@ def _load_roles(company_root: Path) -> dict[str, dict[str, Any]]:
     roles: dict[str, dict[str, Any]] = {}
     for meta_path in (company_root / "roles").glob("**/ROLE_META.yaml"):
         data = load_yaml(meta_path)
-        role_id = data["role_id"]
-        if role_id in roles:
-            raise ValueError(f"duplicate role_id {role_id}")
-        roles[role_id] = data
+        roles[data["role_id"]] = data
     return roles
 
 
@@ -67,12 +64,17 @@ def validate_org(company_root: Path) -> list[str]:
     messages: list[str] = []
     keys = load_yaml(company_root / "shared" / "VALUE_KEYS.yaml")
     roles = _load_roles(company_root)
+    seen_ids: set[str] = set()
     family_anchor_counts: dict[str, int] = {}
 
     for role_id, data in roles.items():
         for field in REQUIRED_FIELDS:
             if field not in data:
                 messages.append(f"missing field {field} in role {role_id}")
+
+        if role_id in seen_ids:
+            messages.append(f"duplicate role_id {role_id}")
+        seen_ids.add(role_id)
 
         if not is_valid_identifier(role_id):
             messages.append(f"invalid role_id {role_id}")

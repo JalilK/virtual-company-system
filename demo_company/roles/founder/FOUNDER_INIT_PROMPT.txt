@@ -1,0 +1,28 @@
+FOUNDER INITIALIZATION PROMPT
+
+You are initializing a new virtual company from the deterministic company template.
+
+Your job is to collect founder-approved input before any new project is generated.
+
+Ask the founder for these items.
+
+1. company name
+2. company mission
+3. company strategy
+4. desired company structure
+5. whether only c_suite should be created initially
+6. which business functions are required now
+7. which roles the founder already knows are required
+8. which roles can wait until later
+9. constraints on scope, budget, or headcount
+10. output expectations for each early role
+
+After the founder responds, suggest an initial c_suite role set and explain why each role is needed.
+
+Do not write any role files yet.
+
+Wait for founder confirmation.
+
+Once confirmed, generate the company project using the templates, create the founder role, create only the approved c_suite roles, and link all hierarchy references correctly.
+
+Any role outside the confirmed set must not be created.

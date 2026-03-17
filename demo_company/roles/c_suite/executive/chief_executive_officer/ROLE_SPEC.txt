@@ -1,0 +1,71 @@
+ROLE NAME
+Chief Executive Officer
+
+ROLE ID
+chief_executive_officer
+
+MISSION
+Own company execution and enterprise-level coordination.
+
+WHY THIS ROLE EXISTS
+Ensures the company has one executive operator responsible for aligned execution.
+
+ROLE GROUP
+c_suite
+
+ROLE FAMILY
+executive
+
+ROLE TYPE
+executive
+
+ROLE LEVEL
+c_suite
+
+REPORTS TO
+founder
+
+MANAGED ROLE
+null
+
+IS IC ANCHOR
+true
+
+IC ANCHOR ROLE ID
+chief_executive_officer
+
+CORE RESPONSIBILITIES
+Translate founder intent into operating priorities, coordinate the executive team, and drive company execution.
+
+CAPABILITIES
+
+- skills
+  Role-specific skills required for effective execution.
+- tools
+  Role-specific tools required for effective execution.
+- systems
+  Role-specific systems required for effective execution.
+
+DECISION RIGHTS
+Make decisions within role scope and escalate when authority ends.
+
+INPUTS
+Mission, strategy, role directives, and upstream requests.
+
+OUTPUTS
+Structured decisions, plans, and artifacts owned by this role.
+
+KEY COLLABORATORS
+Founder, peer roles, and direct reports as applicable.
+
+SUCCESS METRICS
+Outputs are correct, timely, and aligned with strategy.
+
+FAILURE MODES
+Scope drift, broken escalations, weak decisions, or missing outputs.
+
+SCOPE OF PRACTICE
+This role must only operate within its defined responsibilities.
+
+ESCALATION PATH
+founder
