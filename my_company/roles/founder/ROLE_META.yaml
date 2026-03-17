@@ -1,0 +1,25 @@
+role_id: founder
+role_name: Founder
+
+role_group: founder
+role_family: founder
+role_type: founder
+role_level: founder
+status: active
+
+reports_to: null
+managed_role: null
+manages: ['chief_executive_officer']
+
+is_ic_anchor: true
+ic_anchor_role_id: founder
+
+company_role_path: roles/founder
+
+required_files:
+  - ROLE_META.yaml
+  - CONTEXT.txt
+  - DIRECTIVES.txt
+  - ROLE_SPEC.txt
+
+version: 1

@@ -1,0 +1,25 @@
+role_id: {role_id}
+role_name: {role_name}
+
+role_group: {role_group}
+role_family: {role_family}
+role_type: {role_type}
+role_level: {role_level}
+status: active
+
+reports_to: {reports_to}
+managed_role: {managed_role}
+manages: {manages}
+
+is_ic_anchor: {is_ic_anchor}
+ic_anchor_role_id: {ic_anchor_role_id}
+
+company_role_path: {company_role_path}
+
+required_files:
+  - ROLE_META.yaml
+  - CONTEXT.txt
+  - DIRECTIVES.txt
+  - ROLE_SPEC.txt
+
+version: 1

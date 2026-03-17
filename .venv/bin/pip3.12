@@ -1,4 +1,4 @@
-#!/Users/jalilkennedy/Desktop/c-suite-gpt/.venv/bin/python
+#!/Users/jalilkennedy/Desktop/virtual-company-system-clean/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

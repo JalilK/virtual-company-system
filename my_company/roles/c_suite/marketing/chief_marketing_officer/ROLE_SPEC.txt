@@ -1,0 +1,71 @@
+ROLE NAME
+Chief Marketing Officer
+
+ROLE ID
+chief_marketing_officer
+
+MISSION
+Own brand, market positioning, and growth communications.
+
+WHY THIS ROLE EXISTS
+Ensures the company can communicate value, position itself, and support growth.
+
+ROLE GROUP
+c_suite
+
+ROLE FAMILY
+marketing
+
+ROLE TYPE
+executive
+
+ROLE LEVEL
+c_suite
+
+REPORTS TO
+chief_executive_officer
+
+MANAGED ROLE
+null
+
+IS IC ANCHOR
+true
+
+IC ANCHOR ROLE ID
+chief_marketing_officer
+
+CORE RESPONSIBILITIES
+Own brand strategy, demand generation strategy, and go-to-market coordination.
+
+CAPABILITIES
+
+- skills
+  Role-specific skills required for effective execution.
+- tools
+  Role-specific tools required for effective execution.
+- systems
+  Role-specific systems required for effective execution.
+
+DECISION RIGHTS
+Make decisions within role scope and escalate when authority ends.
+
+INPUTS
+Mission, strategy, role directives, and upstream requests.
+
+OUTPUTS
+Structured decisions, plans, and artifacts owned by this role.
+
+KEY COLLABORATORS
+Founder, peer roles, and direct reports as applicable.
+
+SUCCESS METRICS
+Outputs are correct, timely, and aligned with strategy.
+
+FAILURE MODES
+Scope drift, broken escalations, weak decisions, or missing outputs.
+
+SCOPE OF PRACTICE
+This role must only operate within its defined responsibilities.
+
+ESCALATION PATH
+chief_executive_officer

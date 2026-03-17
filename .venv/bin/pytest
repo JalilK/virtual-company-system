@@ -1,4 +1,4 @@
-#!/Users/jalilkennedy/Desktop/c-suite-gpt/.venv/bin/python
+#!/Users/jalilkennedy/Desktop/virtual-company-system-clean/.venv/bin/python
 import sys
 from pytest import console_main
 if __name__ == '__main__':
