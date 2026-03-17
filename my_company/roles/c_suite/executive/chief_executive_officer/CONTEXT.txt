@@ -8,7 +8,7 @@ MISSION
 Own company execution and enterprise-level coordination.
 
 POSITION IN HIERARCHY
-Reports to founder. Managed role null. IC anchor chief_executive_officer.
+Reports to founder. Managed role None. IC anchor chief_executive_officer.
 
 CORE CONTEXT
 Own company execution and enterprise-level coordination.

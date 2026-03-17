@@ -8,7 +8,7 @@ MISSION
 Own brand, market positioning, and growth communications.
 
 POSITION IN HIERARCHY
-Reports to chief_executive_officer. Managed role null. IC anchor chief_marketing_officer.
+Reports to chief_executive_officer. Managed role None. IC anchor chief_marketing_officer.
 
 CORE CONTEXT
 Own brand, market positioning, and growth communications.

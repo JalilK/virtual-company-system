@@ -1,6 +1,6 @@
-# Virtual Company System
+# C-Suite GPT
 
-Virtual Company System is a schema-enforced organizational operating system.
+C-Suite GPT is a schema-enforced organizational operating system.
 
 Structure is law.
 Hierarchy is enforced.
@@ -11,6 +11,8 @@ Evolution is controlled.
 ## System purpose
 
 This repository provides a deterministic, file-structured, CI-enforced framework for defining a virtual company. Every role is represented through required files, validated metadata, and hierarchy rules.
+
+Projects initialize with founder and approved C-suite only. The founder reviews the initialization prompt, works through company mission and structure, confirms the early roles, and then expands the company through a validated plan file.
 
 ## Role hierarchy rules
 
@@ -54,6 +56,30 @@ The founder role must also contain these required files.
 
 - `ROLE_CREATION_TEMPLATE.txt`
 - `FOUNDER_INIT_PROMPT.txt`
+
+## Founder initialization flow
+
+Run
+
+```bash
+vc init my_company
+```
+
+Then review
+
+`roles/founder/FOUNDER_INIT_PROMPT.txt`
+
+Use that prompt with your LLM. When the founder confirms the suggested company structure, save the approved plan into
+
+`inputs/FOUNDER_EXPANSION_CONFIRMATION.yaml`
+
+Then run
+
+```bash
+vc expand my_company --from-founder-init
+```
+
+Expansion is validated before any role files are written.
 
 ## How to create roles
 

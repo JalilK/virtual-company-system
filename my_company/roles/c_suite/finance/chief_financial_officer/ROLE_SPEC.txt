@@ -26,10 +26,10 @@ REPORTS TO
 chief_executive_officer
 
 MANAGED ROLE
-null
+None
 
 IS IC ANCHOR
-true
+True
 
 IC ANCHOR ROLE ID
 chief_financial_officer
@@ -59,13 +59,13 @@ KEY COLLABORATORS
 Founder, peer roles, and direct reports as applicable.
 
 SUCCESS METRICS
-Outputs are correct, timely, and aligned with strategy.
+Role outputs are timely, structured, aligned, and useful.
 
 FAILURE MODES
-Scope drift, broken escalations, weak decisions, or missing outputs.
+Authority drift, unstructured outputs, missing escalations, and unclear scope boundaries.
 
 SCOPE OF PRACTICE
 This role must only operate within its defined responsibilities.
 
 ESCALATION PATH
-chief_executive_officer
+Escalate to chief_executive_officer when work exceeds defined authority.

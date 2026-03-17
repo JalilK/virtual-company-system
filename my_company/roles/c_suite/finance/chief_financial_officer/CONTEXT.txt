@@ -8,7 +8,7 @@ MISSION
 Own capital discipline and financial operating visibility.
 
 POSITION IN HIERARCHY
-Reports to chief_executive_officer. Managed role null. IC anchor chief_financial_officer.
+Reports to chief_executive_officer. Managed role None. IC anchor chief_financial_officer.
 
 CORE CONTEXT
 Own capital discipline and financial operating visibility.

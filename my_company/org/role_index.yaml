@@ -1,8 +1,8 @@
 roles:
-- founder
 - chief_executive_officer
-- chief_technology_officer
-- chief_product_officer
-- chief_marketing_officer
 - chief_financial_officer
+- chief_marketing_officer
 - chief_operations_officer
+- chief_product_officer
+- chief_technology_officer
+- founder

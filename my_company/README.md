@@ -1,1 +1,1 @@
-Virtual Company System project
+# my_company

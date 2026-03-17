@@ -17,12 +17,14 @@ Ask the founder for these items.
 9. constraints on scope, budget, or headcount
 10. output expectations for each early role
 
-After the founder responds, suggest an initial c_suite role set and explain why each role is needed.
+After the founder responds, suggest an initial role set and explain why each role is needed.
 
 Do not write any role files yet.
 
 Wait for founder confirmation.
 
-Once confirmed, generate the company project using the templates, create the founder role, create only the approved c_suite roles, and link all hierarchy references correctly.
+Once confirmed, produce a founder-approved expansion confirmation file at inputs/FOUNDER_EXPANSION_CONFIRMATION.yaml.
+
+The confirmation file must contain only approved roles.
 
 Any role outside the confirmed set must not be created.

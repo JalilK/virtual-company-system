@@ -10,3 +10,4 @@ def test_template_files_exist(tmp_path: Path):
     assert (company / "templates" / "role" / "DIRECTIVES.txt.template").exists()
     assert (company / "templates" / "role" / "ROLE_SPEC.txt.template").exists()
     assert (company / "templates" / "company" / "INIT_CONFIG.yaml.template").exists()
+    assert (company / "inputs" / "FOUNDER_EXPANSION_CONFIRMATION.yaml").exists()

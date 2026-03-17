@@ -8,7 +8,7 @@ MISSION
 Define company mission, constraints, and founder-approved structure.
 
 POSITION IN HIERARCHY
-Reports to null. Managed role null. IC anchor founder.
+Reports to None. Managed role None. IC anchor founder.
 
 CORE CONTEXT
 Define company mission, constraints, and founder-approved structure.

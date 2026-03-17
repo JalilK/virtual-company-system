@@ -21,7 +21,10 @@ def validate_files(company_root: Path) -> list[str]:
             messages.append(f"missing required files in {role_dir}: {', '.join(missing)}")
             continue
 
-        for path in [role_dir / name for name in ROLE_REQUIRED_FILES]:
+        files_to_check = [role_dir / name for name in ROLE_REQUIRED_FILES]
+        if role_dir == roles_root / "founder":
+            files_to_check.extend(role_dir / name for name in FOUNDER_EXTRA_FILES)
+        for path in files_to_check:
             if not path.read_text(encoding="utf-8").strip():
                 messages.append(f"empty file {path}")
 

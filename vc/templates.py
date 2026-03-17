@@ -4,7 +4,8 @@ from textwrap import dedent
 
 
 def role_meta_template() -> str:
-    return dedent("""    role_id: {role_id}
+    return dedent("""\
+    role_id: {role_id}
     role_name: {role_name}
 
     role_group: {role_group}
@@ -33,7 +34,8 @@ def role_meta_template() -> str:
 
 
 def context_template() -> str:
-    return dedent("""    ROLE ID
+    return dedent("""\
+    ROLE ID
     {role_id}
 
     ROLE NAME
@@ -73,7 +75,8 @@ def context_template() -> str:
 
 
 def directives_template() -> str:
-    return dedent("""    You are the {role_name}.
+    return dedent("""\
+    You are the {role_name}.
 
     You must:
 
@@ -93,7 +96,8 @@ def directives_template() -> str:
 
 
 def role_spec_template() -> str:
-    return dedent("""    ROLE NAME
+    return dedent("""\
+    ROLE NAME
     {role_name}
 
     ROLE ID
@@ -168,7 +172,8 @@ def role_spec_template() -> str:
 
 
 def role_creation_template() -> str:
-    return dedent("""    ROLE CREATION REQUEST
+    return dedent("""\
+    ROLE CREATION REQUEST
 
     role_name:
     role_id:
@@ -196,7 +201,8 @@ def role_creation_template() -> str:
 
 
 def founder_init_prompt_template() -> str:
-    return dedent("""    FOUNDER INITIALIZATION PROMPT
+    return dedent("""\
+    FOUNDER INITIALIZATION PROMPT
 
     You are initializing a new virtual company from the deterministic company template.
 
@@ -215,20 +221,50 @@ def founder_init_prompt_template() -> str:
     9. constraints on scope, budget, or headcount
     10. output expectations for each early role
 
-    After the founder responds, suggest an initial c_suite role set and explain why each role is needed.
+    After the founder responds, suggest an initial role set and explain why each role is needed.
 
     Do not write any role files yet.
 
     Wait for founder confirmation.
 
-    Once confirmed, generate the company project using the templates, create the founder role, create only the approved c_suite roles, and link all hierarchy references correctly.
+    Once confirmed, produce a founder-approved expansion confirmation file at inputs/FOUNDER_EXPANSION_CONFIRMATION.yaml.
+
+    The confirmation file must contain only approved roles.
 
     Any role outside the confirmed set must not be created.
     """)
 
 
+def founder_expansion_confirmation_template() -> str:
+    return dedent("""\
+    company_name: my_company
+    company_mission: Replace this with the confirmed mission.
+    company_strategy: Replace this with the confirmed strategy.
+    confirmed_by_founder: false
+
+    approved_roles:
+      - role_id: chief_executive_officer
+        role_name: Chief Executive Officer
+        role_group: c_suite
+        role_family: executive
+        role_type: executive
+        role_level: c_suite
+        reports_to: founder
+        managed_role: null
+        manages: []
+        is_ic_anchor: true
+        ic_anchor_role_id: chief_executive_officer
+        mission: Own company execution and enterprise-level coordination.
+        why_exists: Ensures the company has one executive operator responsible for aligned execution.
+        core_responsibilities: Translate founder intent into operating priorities, coordinate the executive team, and drive company execution.
+
+    notes: Add or remove approved roles, then set confirmed_by_founder to true.
+    """)
+
+
 def init_config_template() -> str:
-    return dedent("""    company_name: my_company
+    return dedent("""\
+    company_name: my_company
 
     include_c_suite: true
 

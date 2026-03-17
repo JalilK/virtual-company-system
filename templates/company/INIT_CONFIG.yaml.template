@@ -1,7 +1,0 @@
-company_name: my_company
-
-include_c_suite: true
-
-initial_role_families: []
-
-generate_default_chains: false
