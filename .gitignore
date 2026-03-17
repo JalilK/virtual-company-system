@@ -14,3 +14,5 @@ __pycache__/
 # Generated company state (never commit runtime state)
 my_company/
 *_company/
+
+virtual_company_system.egg-info/
