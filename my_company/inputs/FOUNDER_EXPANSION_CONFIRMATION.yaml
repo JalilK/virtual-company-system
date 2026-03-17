@@ -1,0 +1,22 @@
+company_name: my_company
+company_mission: Replace this with the confirmed mission.
+company_strategy: Replace this with the confirmed strategy.
+confirmed_by_founder: false
+
+approved_roles:
+  - role_id: chief_executive_officer
+    role_name: Chief Executive Officer
+    role_group: c_suite
+    role_family: executive
+    role_type: executive
+    role_level: c_suite
+    reports_to: founder
+    managed_role: null
+    manages: []
+    is_ic_anchor: true
+    ic_anchor_role_id: chief_executive_officer
+    mission: Own company execution and enterprise-level coordination.
+    why_exists: Ensures the company has one executive operator responsible for aligned execution.
+    core_responsibilities: Translate founder intent into operating priorities, coordinate the executive team, and drive company execution.
+
+notes: Add or remove approved roles, then set confirmed_by_founder to true.

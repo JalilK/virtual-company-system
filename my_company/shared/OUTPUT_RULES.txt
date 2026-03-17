@@ -1,0 +1,1 @@
+All outputs must be structured, deterministic, and reviewable.

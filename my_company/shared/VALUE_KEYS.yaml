@@ -1,0 +1,23 @@
+role_group:
+- founder
+- c_suite
+- workers
+role_type:
+- founder
+- executive
+- manager
+- individual_contributor
+role_level:
+- founder
+- c_suite
+- vp
+- director
+- manager
+- principal
+- staff
+- senior
+- mid
+- junior
+status:
+- active
+- inactive
